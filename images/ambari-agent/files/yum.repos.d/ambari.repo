@@ -1,0 +1,14 @@
+[Updates-ambari-2.1.0]
+name=ambari-2.0.1 - Updates -
+baseurl=http://10.110.20.122/insight/ambari-2.2.2.0.0.4/
+gpgcheck=0
+enabled=1
+priority=1
+
+[Updates-ambari-2.1.2]
+name=ambari-2.0.1 - Updates -
+baseurl=http://10.110.20.122/insight/ambari-2.2.2.0.0.4/
+gpgcheck=0
+enabled=1
+priority=1
+

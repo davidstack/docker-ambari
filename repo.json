@@ -1,0 +1,15 @@
+{
+ "HD": {
+  "Repositories": {
+   "verify_base_url": true,
+   "base_url":"http://10.110.20.122/insight/HDP-2.3.4.7/"
+  }
+ }
+ ,
+ "HD-UTILS": {
+  "Repositories": {
+   "verify_base_url": true,
+   "base_url":"http://10.110.20.122/insight/HDP-UTILS-1.1.0.20/"
+  }
+ }
+}

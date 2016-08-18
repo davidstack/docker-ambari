@@ -1,0 +1,37 @@
+{
+    "blueprint": "emr_blueprint",
+    "default_password": "123456a?",
+    "host_groups": [
+        {
+            "name": "master_1",
+            "hosts": [
+                {
+                  "fqdn":"emr-master1.test.com"
+                }
+            ]
+        },
+        {
+            "name": "master_2",
+            "hosts": [
+                { 
+                  "fqdn":"emr-master2.test.com"
+                }
+            ]
+        },
+        {
+            "name": "edge",
+            "hosts": [
+                {
+                        "fqdn":"emr-edge.test.com"
+                }
+            ]
+        },
+        {
+            "name": "workers",
+            "hosts": [
+                   {"fqdn":"emr-worker1.test.com"},
+				   {"fqdn":"emr-worker2.test.com"}	   
+            ]
+        }
+    ]
+}
