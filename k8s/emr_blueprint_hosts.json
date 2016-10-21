@@ -1,0 +1,37 @@
+{
+    "blueprint": "emr_blueprint",
+    "default_password": "123456a?",
+    "host_groups": [
+        {
+            "name": "master_1",
+            "hosts": [
+                {
+                  "fqdn":"ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com"
+                }
+            ]
+        },
+        {
+            "name": "master_2",
+            "hosts": [
+                { 
+                  "fqdn":"ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com"
+                }
+            ]
+        },
+        {
+            "name": "edge",
+            "hosts": [
+                {
+                        "fqdn":"ambari-agent-2.ambari-agent.bigdata.svc.iopk8s.com"
+                }
+            ]
+        },
+        {
+            "name": "workers",
+            "hosts": [
+                   {"fqdn":"ambari-agent-3.ambari-agent.bigdata.svc.iopk8s.com"},
+				   {"fqdn":"ambari-agent-4.ambari-agent.bigdata.svc.iopk8s.com"}	   
+            ]
+        }
+    ]
+}

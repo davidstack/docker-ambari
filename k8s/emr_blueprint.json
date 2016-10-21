@@ -1,0 +1,233 @@
+{
+    "Blueprints": {
+        "blueprint_name": "emr_blueprint",
+        "stack_name": "HDP",
+        "stack_version": "2.3"
+    },
+    "host_groups": [
+        {
+            "name": "edge",
+            "cardinality": "1",
+            "components": [
+                {
+                    "name": "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name": "JOURNALNODE"
+                },
+                {
+                    "name": "PIG"
+                },
+                {
+                    "name": "OOZIE_SERVER"
+                },
+                {
+                    "name": "OOZIE_CLIENT"
+                },
+                {
+                    "name": "HDFS_CLIENT"
+                },
+                {
+                    "name": "MAPREDUCE2_CLIENT"
+                },
+                {
+                    "name": "METRICS_COLLECTOR"
+                },
+                {
+                    "name": "METRICS_MONITOR"
+                },
+                {
+                    "name": "TEZ_CLIENT"
+                },
+                {
+                    "name": "YARN_CLIENT"
+                },
+                {
+                    "name": "ZOOKEEPER_CLIENT"
+                },
+                {
+                    "name": "HIVE_SERVER"
+                },
+                {
+                    "name": "HIVE_METASTORE"
+                },
+                {
+                    "name": "HIVE_CLIENT"
+                },
+                {
+                    "name": "WEBHCAT_SERVER"
+                },
+                {
+                    "name": "MYSQL_SERVER"
+                },
+                {
+                    "name": "SPARK_THRIFTSERVER"
+                },
+                {
+                   "name": "HUE_MASTER"
+                }
+            ]
+        },
+        {
+            "name": "master_1",
+            "cardinality": "1",
+            "components": [
+                {
+                    "name": "HISTORYSERVER"
+                },
+                {
+                    "name": "JOURNALNODE"
+                },
+                {
+                    "name": "METRICS_MONITOR"
+                },
+                {
+                    "name": "RESOURCEMANAGER"
+                },
+                {
+                    "name": "NAMENODE"
+                },
+                {
+                    "name": "ZKFC"
+                },
+                {
+                    "name": "ZOOKEEPER_SERVER"
+                }
+            ]
+        },
+        {
+            "name": "master_2",
+            "cardinality": "1",
+            "components": [
+                {
+                    "name": "APP_TIMELINE_SERVER"
+                },
+                {
+                    "name": "JOURNALNODE"
+                },
+                {
+                    "name": "RESOURCEMANAGER"
+                },
+                {
+                    "name": "METRICS_MONITOR"
+                },
+                {
+                    "name": "ZOOKEEPER_SERVER"
+                },
+                {
+                    "name": "SPARK_JOBHISTORYSERVER"
+                },
+                {
+                    "name": "NAMENODE"
+                },
+                {
+                    "name": "ZKFC"
+                }
+            ]
+        },
+        {
+            "name": "workers",
+            "cardinality": "1",
+            "components": [
+                {
+                    "name": "DATANODE"
+                },
+                {
+                    "name": "METRICS_MONITOR"
+                },
+                {
+                    "name": "NODEMANAGER"
+                },
+                {
+                    "name": "SPARK_CLIENT"
+                }
+            ]
+        }
+    ],
+    "configurations": [
+        {
+            "oozie-site": {
+                "properties": {
+                    "oozie.service.ProxyUserService.proxyuser.hue.groups":"*",
+                    "oozie.service.ProxyUserService.proxyuser.hue.hosts":"*"
+                }
+            }
+        },
+        {
+            "webhcat-site": {
+                "properties": {
+                    "webhcat.proxyuser.hue.groups":"*",
+                    "webhcat.proxyuser.hue.hosts":"*"
+                }
+            }
+        },
+        {
+            "core-site": {
+                "properties": {
+                    "fs.defaultFS": "hdfs://mycluster",
+                    "ha.zookeeper.quorum": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-2.ambari-agent.bigdata.svc.iopk8s.com:2181",
+                    "hadoop.proxyuser.hbase.groups":"*",
+                    "hadoop.proxyuser.hbase.hosts":"*",
+                    "hadoop.proxyuser.hue.groups":"*",
+                    "hadoop.proxyuser.hue.hosts":"*",
+                    "hadoop.proxyuser.https.hosts":"*",
+                    "hadoop.proxyuser.https.groups":"*",
+                    "hadoop.proxyuser.oozie.hosts":"*",
+                    "hadoop.proxyuser.oozie.groups":"*"
+                }
+            }
+        },
+        {
+            "hdfs-site": {
+                "properties": {
+                    "dfs.client.failover.proxy.provider.mycluster": "org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider",
+                    "dfs.ha.automatic-failover.enabled": "true",
+                    "dfs.ha.fencing.methods": "shell(/bin/true)",
+                    "dfs.ha.namenodes.mycluster": "nn1,nn2",
+                    "dfs.namenode.http-address": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:50070",
+                    "dfs.namenode.http-address.mycluster.nn1": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:50070",
+                    "dfs.namenode.http-address.mycluster.nn2": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:50070",
+                    "dfs.namenode.https-address": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:50470",
+                    "dfs.namenode.https-address.mycluster.nn1": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:50470",
+                    "dfs.namenode.https-address.mycluster.nn2": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:50470",
+                    "dfs.namenode.rpc-address.mycluster.nn1": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:8020",
+                    "dfs.namenode.rpc-address.mycluster.nn2": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8020",
+                    "dfs.namenode.shared.edits.dir": "qjournal://ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:8485;ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8485;ambari-agent-2.ambari-agent.bigdata.svc.iopk8s.com:8485/mycluster",
+                    "dfs.nameservices": "mycluster",
+                    "dfs.datanode.data.dir":"/data",
+                    "dfs.datanode.du.reserved":"0"
+                }
+            }
+        },
+        {
+            "yarn-site": {
+                "properties": {
+                    "hadoop.registry.rm.enabled": "false",
+                    "hadoop.registry.zk.quorum": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-2.ambari-agent.bigdata.svc.iopk8s.com:2181",
+                    "yarn.log.server.url": "http://ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:19888/jobhistory/logs",
+                    "yarn.resourcemanager.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8050",
+                    "yarn.resourcemanager.admin.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8141",
+                    "yarn.resourcemanager.cluster-id": "yarn-cluster",
+                    "yarn.resourcemanager.ha.automatic-failover.zk-base-path": "/yarn-leader-election",
+                    "yarn.resourcemanager.ha.enabled": "true",
+                    "yarn.resourcemanager.ha.rm-ids": "rm1,rm2",
+                    "yarn.resourcemanager.hostname": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com",
+                    "yarn.resourcemanager.recovery.enabled": "true",
+                    "yarn.resourcemanager.resource-tracker.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8025",
+                    "yarn.resourcemanager.scheduler.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8030",
+                    "yarn.resourcemanager.store.class": "org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore",
+                    "yarn.resourcemanager.webapp.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8088",
+                    "yarn.resourcemanager.webapp.address.rm1": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8088",
+                    "yarn.resourcemanager.webapp.address.rm2": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8088",
+                    "yarn.resourcemanager.webapp.https.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8090",
+                    "yarn.timeline-service.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:10200",
+                    "yarn.timeline-service.webapp.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8188",
+                    "yarn.timeline-service.webapp.https.address": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:8190",
+                    "yarn.resourcemanager.zk-address": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com:2181,ambari-agent-2.ambari-agent.bigdata.svc.iopk8s.com:2181",
+                    "yarn.resourcemanager.hostname.rm1": "ambari-agent-0.ambari-agent.bigdata.svc.iopk8s.com",
+                    "yarn.resourcemanager.hostname.rm2": "ambari-agent-1.ambari-agent.bigdata.svc.iopk8s.com"
+                }
+            }
+        }
+    ]
+}

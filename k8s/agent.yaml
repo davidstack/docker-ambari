@@ -1,0 +1,43 @@
+# A headless service to create DNS records
+apiVersion: v1
+kind: Service
+metadata:
+  name: ambari-agent
+  namespace: bigdata
+  labels:
+    app: ambari-agent
+spec:
+  ports:
+  - port: 80
+    name: ambari-agent
+  # *.nginx.default.svc.cluster.local
+  clusterIP: None
+  selector:
+    app: ambari-agent
+---
+apiVersion: apps/v1alpha1
+kind: PetSet
+metadata:
+  name: ambari-agent
+spec:
+  serviceName: "ambari-agent"
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: ambari-agent
+      annotations:
+        pod.alpha.kubernetes.io/initialized: "true"
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: ambari-agent
+        image: 10.110.17.138:5000/iop/ambari-agent:v2.0
+        imagePullPolicy: Always
+        command:
+           - /usr/local/bin/start.sh
+        securityContext:
+          privileged: true
+        env:
+        - name: AMBARI_SERVER_HOSTNAME
+          value: ambari-master-0.ambari-master.bigdata.svc.iopk8s.com
