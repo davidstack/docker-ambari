@@ -32,3 +32,23 @@
     1、由于安装hdfs组件时需要切换到hdfs用户，ambari代码应该限制了hdfs用户的切换（参考文件/etc/security/limits.d/hdfs.conf），所以创建容器需要增加 --privileged=true 参数
     2、创建容器时，虽然限制了容器内存，但是ambari manager界面查看到的节点内存仍为宿主机内存
    
+#在K8s环境部署Ambrai
+
+
+##K8s环境:
+      1. K8s环境支持dns解析
+      2. k8s环境支持部署petset
+      3. k8s 环境使用flannel网络或者其他sdn网络
+      4. k8s环境允许创建Privileged的容器
+
+##创建Ambrai Pod
+     1. 创建bigdata命名空间 kubectl create namespace
+     2. 创建ambari-server 
+          'kubectl create -f k8s/master.yaml'
+     3. 创建ambari-agent
+         'kubectl create -f k8s/agent.yaml'
+
+##部署Ambrai 集群
+    1.修改blueprint配置文件（主要为域名，由于使用PetSet，所以每个Pod的域名都是确定的）
+    2.修改 k8s/service_init.py 中，指定ambrai-server的pod地址
+    3.执行python  service_init.py，等待安装完成，（需要在ambari 禁止 ip和hostname检查）
