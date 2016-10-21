@@ -43,12 +43,10 @@
 
 ##创建Ambrai Pod
      1. 创建bigdata命名空间 kubectl create namespace
-     2. 创建ambari-server 
-          'kubectl create -f k8s/master.yaml'
-     3. 创建ambari-agent
-         'kubectl create -f k8s/agent.yaml'
+     2. 创建ambari-server:'kubectl create -f k8s/master.yaml'
+     3. 创建ambari-agent:'kubectl create -f k8s/agent.yaml'
 
 ##部署Ambrai 集群
-    1.修改blueprint配置文件（主要为域名，由于使用PetSet，所以每个Pod的域名都是确定的）
-    2.修改 k8s/service_init.py 中，指定ambrai-server的pod地址
-    3.执行python  service_init.py，等待安装完成，（需要在ambari 禁止 ip和hostname检查）
+     1.  修改blueprint配置文件（主要为域名，由于使用PetSet，所以每个Pod的域名都是确定的）
+     2.  修改 k8s/service_init.py 中，指定ambrai-server的pod地址
+     3.  执行python  service_init.py，等待安装完成，（需要在ambari 禁止 ip和hostname检查）
