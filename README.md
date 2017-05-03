@@ -13,10 +13,15 @@
 
 ##1. ambari 集群节点创建
      docker run -itd --name ambari-server.test.com --hostname ambari-server.test.com --ip 172.18.0.2 --net overlay -v /root/ambari/hosts:/etc/hosts --privileged=true 10.110.17.138:5000/iop/ambari-server:v2.0 /usr/local/bin/start.sh
+     
      docker run -itd --name emr-master1.test.com --hostname emr-master1.test.com --ip 172.18.0.3 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts --memory 2G   --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
-     docker run -itd --name emr-master2.test.com --hostname emr-master2.test.com --ip 172.18.0.4 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts  --memory 2G      --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
-     docker run -itd --name emr-edge.test.com --hostname emr-edge.test.com --ip 172.18.0.5 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts --memory 2G    --privileged=true  10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
-     docker run -itd --name emr-worker1.test.com --hostname emr-worker1.test.com --ip 172.18.0.6 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts  --memory 2G  --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
+    
+    docker run -itd --name emr-master2.test.com --hostname emr-master2.test.com --ip 172.18.0.4 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts  --memory 2G      --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
+    
+    docker run -itd --name emr-edge.test.com --hostname emr-edge.test.com --ip 172.18.0.5 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts --memory 2G    --privileged=true  10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
+   
+   docker run -itd --name emr-worker1.test.com --hostname emr-worker1.test.com --ip 172.18.0.6 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts  --memory 2G  --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
+     
      docker run -itd --name emr-worker2.test.com --hostname emr-worker2.test.com --ip 172.18.0.7 --net overlay --env AMBARI_SERVER_HOSTNAME=ambari-server.test.com -v /root/ambari/hosts:/etc/hosts  --memory 2G   --privileged=true 10.110.17.138:5000/iop/ambari-agent:v2.0 /usr/local/bin/start.sh
 
 
