@@ -1,0 +1,34 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hadoop-namenode 
+  namespace: hadoop 
+  labels:
+    app: hadoop 
+    daemon: namenode 
+spec:
+  ports:
+  - port: 80
+    name: webui
+    protocol: TCP
+    targetPort: 50070
+    nodePort: 30666
+  - port: 8020
+    name: namenode
+    protocol: TCP
+    targetPort: 8020
+    nodePort: 30667
+  - port: 18088
+    name: rm
+    protocol: TCP
+    targetPort: 18088
+    nodePort: 30668
+  - port: 18025
+    name: ipc1
+    protocol: TCP
+    targetPort: 18025
+  selector:
+    app: hadoop
+    daemon: namenode 
+  type: NodePort

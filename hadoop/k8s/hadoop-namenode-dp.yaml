@@ -1,0 +1,93 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  labels:
+    app: hadoop 
+    daemon: namenode 
+  name: hadoop-namenode 
+  namespace: hadoop
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: hadoop-namenode
+      namespace: hadoop
+      labels:
+        app: hadoop
+        daemon: namenode
+      annotations:
+        pod.beta.kubernetes.io/hostname: hadoop-namenode
+    spec:
+      serviceAccount: default
+      volumes:
+      - name: hadoop-namenode
+        hostPath:
+          path: /hadoopdata
+      containers:
+        - name: namenode
+          image: 10.110.17.138:5000/damonwang/hadoop-namenode:2.7.0 
+          imagePullPolicy: Always
+          ports:
+            - name: namenode
+              containerPort: 8020
+            - name: webui
+              containerPort: 50070
+          env:
+            - name: CLUSTER_NAME
+              value: hadoop
+            - name: MULTIHOMED_NETWORK
+              value: "0"
+            - name: CORE_CONF_fs_defaultFS
+              value: hdfs://hadoop-namenode:8020
+            - name: HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check
+              value: "false"
+            - name: HDFS_CONF_dfs_client_use_datanode_hostname
+              value: "false"
+            - name: HDFS_CONF_dfs_datanode_use_datanode_hostname
+              value: "false"
+            - name: CORE_CONF_hadoop_proxyuser_root_hosts
+              value: "*"
+            - name: CORE_CONF_hadoop_proxyuser_root_groups
+              value: "*"
+            - name: HDFS_CONF_dfs_namenode_rpc___bind___host
+              value: "0.0.0.0"
+            - name: HDFS_CONF_dfs_namenode_servicerpc___bind___host
+              value: "0.0.0.0"
+            - name: HDFS_CONF_dfs_namenode_http___bind___host
+              value: "0.0.0.0"
+            - name: HDFS_CONF_dfs_namenode_https___bind___host
+              value: "0.0.0.0"
+            - name: YARN_CONF_yarn_nodemanager_aux___services
+              value: "mapreduce_shuffle"
+            - name: YARN_CONF_yarn_nodemanager_aux___services_mapreduce___shuffle_class
+              value: "org.apache.hadoop.mapred.ShuffleHandler"
+            - name: YARN_CONF_yarn_resourcemanager_address
+              value: "hadoop-namenode:18040"
+            - name: YARN_CONF_yarn_resourcemanager_scheduler_address
+              value: "hadoop-namenode:18030"
+            - name: YARN_CONF_yarn_resourcemanager_webapp_address
+              value: "hadoop-namenode:18088"
+            - name: YARN_CONF_yarn_resourcemanager_resource___tracker_address
+              value: "hadoop-namenode:18025"
+            - name: YARN_CONF_yarn_resourcemanager_admin_address
+              value: "hadoop-namenode:18141"
+          volumeMounts:
+            - name: hadoop-namenode
+              mountPath: /hadoop/dfs/
+          livenessProbe:
+              tcpSocket:
+                port: 8020 
+              initialDelaySeconds: 120
+              timeoutSeconds: 5
+          readinessProbe:
+              tcpSocket:
+                port: 8020
+              timeoutSeconds: 5
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "2"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
